@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webspark_test_task/configs/app_strings.dart';
+import 'package:webspark_test_task/utils/api.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,6 +10,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  final Api api = Api();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +29,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await api.getDataForProcessing();
+        },
+        child: const Text('+'),
       ),
     );
   }
