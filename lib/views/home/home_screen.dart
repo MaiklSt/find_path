@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:webspark_test_task/configs/app_strings.dart';
-import 'package:webspark_test_task/utils/api.dart';
+import 'package:webspark_test_task/views/home/cubit/home_cubit.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-
-  final Api api = Api();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await api.getDataForProcessing();
+          await context.read<HomeCubit>().getDataForProcessing();
         },
         child: const Text('+'),
       ),

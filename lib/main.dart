@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:webspark_test_task/configs/app_strings.dart';
-import 'package:webspark_test_task/views/home_screen.dart';
+import 'package:webspark_test_task/views/home/cubit/home_cubit.dart';
+import 'package:webspark_test_task/views/home/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +19,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: BlocProvider<HomeCubit>(
+      create: (context) => HomeCubit(),
+        child: const HomeScreen(),
+      ),
     );
   }
 }
