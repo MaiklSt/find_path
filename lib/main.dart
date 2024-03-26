@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webspark_test_task/configs/app_strings.dart';
 import 'package:webspark_test_task/views/home_screen.dart';
 
 void main() {
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Webspark test task',
+      title: AppStrings.websparkTestTask,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webspark_test_task/configs/app_strings.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,14 +14,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Home Screen'),
+        title: const Text(AppStrings.homeScreen),
       ),
       body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Set valid API base URL in order to continue',
+              AppStrings.setValidApiBaseUrlInOrderToContinue,
             ),
           ],
         ),
