@@ -77,7 +77,7 @@ class _ProcessScreenState extends State<ProcessScreen> {
                           await processCubit.sendResultsToServer();
                           navigator.push(
                             MaterialPageRoute(
-                              builder: (context) => const ResultListScreen(),
+                              builder: (context) => ResultListScreen(listCalculationResultModel: processCubit.list),
                             ),
                           );
                         },
