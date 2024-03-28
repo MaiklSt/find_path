@@ -8,4 +8,5 @@ class AppStrings {
   static const String calculation = 'Calculation...';
   static const String sendResultsToServer = 'Send results to server';
   static const String resultListScreen = 'Result list screen';
+  static const String previewScreen = 'Preview screen';
 }
