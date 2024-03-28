@@ -4,6 +4,7 @@ import 'package:webspark_test_task/configs/app_strings.dart';
 import 'package:webspark_test_task/views/home/cubit/home_cubit.dart';
 import 'package:webspark_test_task/views/process/process_screen.dart';
 import 'package:webspark_test_task/views/widgets/app_loader.dart';
+import 'package:webspark_test_task/views/widgets/custom_appbar.dart';
 import 'package:webspark_test_task/views/widgets/custom_elevated_button.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -12,10 +13,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text(AppStrings.homeScreen),
-      ),
+      appBar: const CustomAppBar(title: Text(AppStrings.homeScreen)),
       body: Center(
         child: BlocConsumer<HomeCubit, HomeState>(
           listener: (context, state) {

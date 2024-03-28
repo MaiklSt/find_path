@@ -4,6 +4,7 @@ import 'package:webspark_test_task/configs/app_strings.dart';
 import 'package:webspark_test_task/models/data_for_processing_model.dart';
 import 'package:webspark_test_task/views/process/cubit/process_cubit.dart';
 import 'package:webspark_test_task/views/result/result_list_screen.dart';
+import 'package:webspark_test_task/views/widgets/custom_appbar.dart';
 import 'package:webspark_test_task/views/widgets/custom_elevated_button.dart';
 
 class ProcessScreen extends StatefulWidget {
@@ -27,10 +28,7 @@ class _ProcessScreenState extends State<ProcessScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text(AppStrings.processScreen),
-      ),
+      appBar: const CustomAppBar(title: Text(AppStrings.processScreen)),
       body: BlocBuilder<ProcessCubit, ProcessState>(
         bloc: processCubit,
         builder: (context, state) {
