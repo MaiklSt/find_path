@@ -2,7 +2,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:webspark_test_task/configs/config.dart';
-import 'package:webspark_test_task/configs/endpoints.dart';
 import 'package:webspark_test_task/utils/failure.dart';
 
 class Api {
@@ -35,10 +34,9 @@ class Api {
     }
   }
 
-  Future getDataForProcessing() async {
+  Future<Response> getDataForProcessing(String endpoint) async {
     try {
-      // ignore: unused_local_variable
-      var response = await _dio.get(Endpoints.flutterApi);
+      return await _dio.get(endpoint);
     } on DioException catch (e) {
       throw Failure(e.message ?? '', code: e.response?.statusCode ?? 0);
     } catch (e) {
