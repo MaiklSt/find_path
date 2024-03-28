@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:webspark_test_task/configs/app_strings.dart';
 import 'package:webspark_test_task/models/data_for_processing_model.dart';
 import 'package:webspark_test_task/views/process/cubit/process_cubit.dart';
+import 'package:webspark_test_task/views/result/result_list_screen.dart';
 import 'package:webspark_test_task/views/widgets/custom_elevated_button.dart';
 
 class ProcessScreen extends StatefulWidget {
@@ -73,7 +74,15 @@ class _ProcessScreenState extends State<ProcessScreen> {
                     buttonTitle: AppStrings.sendResultsToServer,
                     onPressed: state.isProcessing
                         ? null
-                        : () => processCubit.sendResultsToServer(),
+                        : () async {
+                          final navigator = Navigator.of(context);
+                          await processCubit.sendResultsToServer();
+                          navigator.push(
+                            MaterialPageRoute(
+                              builder: (context) => const ResultListScreen(),
+                            ),
+                          );
+                        },
                   ),
                 ),
               ],

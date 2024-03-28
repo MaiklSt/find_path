@@ -7,4 +7,5 @@ class AppStrings {
   static const String allCalculationsHasFinished = 'All calculations has finished, you can send your results to server';
   static const String calculation = 'Calculation...';
   static const String sendResultsToServer = 'Send results to server';
+  static const String resultListScreen = 'Result list screen';
 }
