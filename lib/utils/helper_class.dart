@@ -40,6 +40,7 @@ class HelperClass {
     );
   }
 
+  // calculation method is taken from the Internet
   Future<CalculationResultModel> runFinder(LocationModel locationModel, {bool isBFS = false, Function? update}) async {
 
     final List<PathElementModel> queue = <PathElementModel>[locationModel.grid[locationModel.startRow][locationModel.startColumn]..visited = true];
