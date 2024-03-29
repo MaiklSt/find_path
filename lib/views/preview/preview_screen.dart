@@ -14,51 +14,66 @@ class PreviewScreen extends StatelessWidget {
     final matrixSize = listCalculationResultModel.locationModel.grid.length;
     return Scaffold(
       appBar: const CustomAppBar(title: Text(AppStrings.previewScreen)),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: matrixSize,
-            crossAxisSpacing: 0.0,
-            mainAxisSpacing: 0.0,
-          ),
-          itemCount: matrixSize * matrixSize,
-          itemBuilder: (context, index) {
-            final row = index ~/ matrixSize;
-            final column = index % matrixSize;
-            final PathElementModel pathElementModel =
-                listCalculationResultModel.locationModel.grid[row][column];
-
-            final Color color = pathElementModel.row ==
-                        listCalculationResultModel.locationModel.startRow &&
-                    pathElementModel.column ==
-                        listCalculationResultModel.locationModel.startColumn
-                ? const Color(0xFF64FFDA)//starting field
-                : row == listCalculationResultModel.locationModel.goalRow &&
-                        column ==
-                            listCalculationResultModel.locationModel.goalColumn
-                    ? const Color(0xFF009688)//finishing field
-                    : listCalculationResultModel
-                            .locationModel.grid[row][column].inPath
-                        ? const Color(0xFF4CAF50)//shortest path field
-                        : !listCalculationResultModel
-                                .locationModel.grid[row][column].passable
-                            ? const Color(0x00000000)//locked field, color transparent
-                            : const Color(0x00ffffff);//free field, transparent color
-
-            return Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: color,
-                  border: Border.all(color: Colors.black),
+      body: Column(
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: matrixSize,
+                  crossAxisSpacing: 0.0,
+                  mainAxisSpacing: 0.0,
                 ),
-                alignment: Alignment.center,
-                child:
-                    Text('${pathElementModel.column},${pathElementModel.row}'),
+                itemCount: matrixSize * matrixSize,
+                itemBuilder: (context, index) {
+                  final row = index ~/ matrixSize;
+                  final column = index % matrixSize;
+                  final PathElementModel pathElementModel =
+                      listCalculationResultModel.locationModel.grid[row][column];
+              
+                  final Color color = pathElementModel.row ==
+                              listCalculationResultModel.locationModel.startRow &&
+                          pathElementModel.column ==
+                              listCalculationResultModel.locationModel.startColumn
+                      ? const Color(0xFF64FFDA)//starting field
+                      : row == listCalculationResultModel.locationModel.goalRow &&
+                              column ==
+                                  listCalculationResultModel.locationModel.goalColumn
+                          ? const Color(0xFF009688)//finishing field
+                          : listCalculationResultModel
+                                  .locationModel.grid[row][column].inPath
+                              ? const Color(0xFF4CAF50)//shortest path field
+                              : !listCalculationResultModel
+                                      .locationModel.grid[row][column].passable
+                                  ? const Color(0x00000000)//locked field, color transparent
+                                  : const Color(0x00ffffff);//free field, transparent color
+              
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: color,
+                      border: Border.all(color: Colors.black),
+                    ),
+                    alignment: Alignment.center,
+                    child:
+                        Text('${pathElementModel.column},${pathElementModel.row}'),
+                  );
+                },
               ),
-            );
-          },
-        ),
+            ),
+          ),          
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(listCalculationResultModel.calculatedPath.length, (index) {
+              if (index == 0) {
+                return Text('(${listCalculationResultModel.calculatedPath[index].column},${listCalculationResultModel.calculatedPath[index].row})');
+              }
+              return Text('(${listCalculationResultModel.calculatedPath[index].column},${listCalculationResultModel.calculatedPath[index].row})->');
+            }).reversed.toList(),
+          ),
+        ],
       ),
     );
   }

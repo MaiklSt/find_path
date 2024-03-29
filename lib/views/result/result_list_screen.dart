@@ -31,11 +31,11 @@ class ResultListScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(listCalculationResultModel[columnIndex].calculatedPath.length, (rowIndex) {
-                    if (rowIndex < listCalculationResultModel[columnIndex].calculatedPath.length - 1) {
-                      return Text('(${listCalculationResultModel[columnIndex].calculatedPath[rowIndex].row},${listCalculationResultModel[columnIndex].calculatedPath[rowIndex].column})->');
+                    if (rowIndex == 0) {
+                      return Text('(${listCalculationResultModel[columnIndex].calculatedPath[rowIndex].column},${listCalculationResultModel[columnIndex].calculatedPath[rowIndex].row})');
                     }
-                    return Text('(${listCalculationResultModel[columnIndex].calculatedPath[rowIndex].row},${listCalculationResultModel[columnIndex].calculatedPath[rowIndex].column})');
-                  }),
+                    return Text('(${listCalculationResultModel[columnIndex].calculatedPath[rowIndex].column},${listCalculationResultModel[columnIndex].calculatedPath[rowIndex].row})->');
+                  }).reversed.toList(),
                 ),
               ),
             ),

@@ -4,8 +4,10 @@ import 'package:webspark_test_task/configs/app_strings.dart';
 import 'package:webspark_test_task/models/data_for_processing_model.dart';
 import 'package:webspark_test_task/views/process/cubit/process_cubit.dart';
 import 'package:webspark_test_task/views/result/result_list_screen.dart';
+import 'package:webspark_test_task/views/widgets/app_loader.dart';
 import 'package:webspark_test_task/views/widgets/custom_appbar.dart';
 import 'package:webspark_test_task/views/widgets/custom_elevated_button.dart';
+import 'package:webspark_test_task/views/widgets/error_dialog.dart';
 
 class ProcessScreen extends StatefulWidget {
   const ProcessScreen({super.key, required this.data});
@@ -38,18 +40,25 @@ class _ProcessScreenState extends State<ProcessScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const SizedBox(),
-                Column(
+                !state.isSending && state.isFailure ? ErrorDialog(
+                    title: AppStrings.error,
+                    message: state.failure!.message,
+                    errorCode: state.failure!.code.toString(),
+                  ) : Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
                       padding:
                           const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-                      child: Text(
+                      child: state.isSending ? const Text(
+                        AppStrings.sending,
+                        textAlign: TextAlign.center,
+                      ) : Text(
                         state.isProcessing ? AppStrings.calculation : AppStrings.allCalculationsHasFinished,
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    Stack(
+                    state.isSending ? const AppLoader() : Stack(
                       alignment: AlignmentDirectional.center,
                       children: [
                         SizedBox(
@@ -70,16 +79,18 @@ class _ProcessScreenState extends State<ProcessScreen> {
                   width: double.infinity,
                   child: CustomElevatedButton(
                     buttonTitle: AppStrings.sendResultsToServer,
-                    onPressed: state.isProcessing
+                    onPressed: state.isProcessing || state.isSending
                         ? null
                         : () async {
                           final navigator = Navigator.of(context);
-                          await processCubit.sendResultsToServer();
-                          navigator.push(
-                            MaterialPageRoute(
-                              builder: (context) => ResultListScreen(listCalculationResultModel: processCubit.list),
-                            ),
-                          );
+                          var res = await processCubit.sendResultsToServer();
+                          if (res == true) {
+                            navigator.push(
+                              MaterialPageRoute(
+                                builder: (context) => ResultListScreen(listCalculationResultModel: processCubit.list),
+                              ),
+                            );                            
+                          }
                         },
                   ),
                 ),

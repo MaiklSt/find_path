@@ -6,6 +6,7 @@ import 'package:webspark_test_task/views/process/process_screen.dart';
 import 'package:webspark_test_task/views/widgets/app_loader.dart';
 import 'package:webspark_test_task/views/widgets/custom_appbar.dart';
 import 'package:webspark_test_task/views/widgets/custom_elevated_button.dart';
+import 'package:webspark_test_task/views/widgets/error_dialog.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -83,22 +84,10 @@ class HomeScreen extends StatelessWidget {
                 ),
                 state.isLoading ? const AppLoader() : const SizedBox.shrink(),
                 state.failure != null
-                    ? Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(12.5),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                state.failure!.message,
-                              ),
-                            ),
-                          ),
-                        ),
+                    ? ErrorDialog(
+                        title: AppStrings.error,
+                        message: state.failure!.message,
+                        errorCode: state.failure!.code.toString(),
                       )
                     : const SizedBox.shrink(),
               ],

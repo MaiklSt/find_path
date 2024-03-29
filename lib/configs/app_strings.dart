@@ -9,4 +9,7 @@ class AppStrings {
   static const String sendResultsToServer = 'Send results to server';
   static const String resultListScreen = 'Result list screen';
   static const String previewScreen = 'Preview screen';
+  static const String sending = 'Sending...';
+  static const String error = 'Error';
+  static const String pleaseTryAgainLater = 'Something happened... please try again later.';
 }

@@ -10,6 +10,10 @@ class Api {
     final options = BaseOptions(
       baseUrl: Config.apiBaseUrl,
       connectTimeout: Config.apiConnectTimeout,
+      headers: {
+        "Content-Type": "application/json",
+        "accept": "application/json",
+      }
     );
 
     _dio = Dio(options);
@@ -27,6 +31,7 @@ class Api {
           },
           onError: (DioException error, ErrorInterceptorHandler handler) {
             debugPrint('Error - [${error.response?.statusCode}] => PATH: ${error.requestOptions.path}');
+            debugPrint('Full URL: ${error.requestOptions.uri}');
             return handler.next(error);
           },
         ),
@@ -40,7 +45,40 @@ class Api {
     } on DioException catch (e) {
       throw Failure(e.message ?? '', code: e.response?.statusCode ?? 0);
     } catch (e) {
-      throw Failure('Something happened... please try again later.', code: 0);
+      throw Failure('$e', code: 0);
+    }
+  }
+
+  Future<Response> sendResultsToServer(List<Map<String, dynamic>> results) async {
+    try {
+      return await _dio.post(
+        'flutter/api',
+        data: results,
+
+        //response about an incorrect calculation
+        // data: [
+        //   {
+        //     "id": "7d785c38-cd54-4a98-ab57-44e50ae646c1",
+        //     "result": {
+        //       "steps": [
+        //         {
+        //           "x": "0",
+        //           "y": "0"
+        //         },
+        //         {
+        //           "x": "0",
+        //           "y": "1"
+        //         }
+        //       ],
+        //       "path": "(0,0)->(0,1)"
+        //     }
+        //   }
+        // ]
+      );
+    } on DioException catch (e) {
+      throw Failure(e.message ?? '', code: e.response?.statusCode ?? 0, response: e.response);
+    } catch (e) {
+      throw Failure('$e', code: 0);
     }
   }
 }
