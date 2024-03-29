@@ -60,5 +60,6 @@ class HomeCubit extends Cubit<HomeState> {
 
   void setEndpoint(String text) {
     endpoint = text;
+    _api.postUrl = text;
   }
 }

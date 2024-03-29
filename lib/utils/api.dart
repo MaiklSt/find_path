@@ -3,12 +3,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:webspark_test_task/configs/config.dart';
 import 'package:webspark_test_task/utils/failure.dart';
-
 class Api {
-  late final Dio _dio;
-  Api() {
+  
+  static Api? _instance;
+
+  Api._() {
     final options = BaseOptions(
-      baseUrl: Config.apiBaseUrl,
+      // baseUrl: Config.apiBaseUrl,
       connectTimeout: Config.apiConnectTimeout,
       headers: {
         "Content-Type": "application/json",
@@ -39,6 +40,12 @@ class Api {
     }
   }
 
+  factory Api() => _instance ??= Api._();
+
+  late final Dio _dio;
+
+  String? postUrl;
+
   Future<Response> getDataForProcessing(String endpoint) async {
     try {
       return await _dio.get(endpoint);
@@ -52,7 +59,7 @@ class Api {
   Future<Response> sendResultsToServer(List<Map<String, dynamic>> results) async {
     try {
       return await _dio.post(
-        'flutter/api',
+        postUrl!,
         data: results,
 
         //response about an incorrect calculation
